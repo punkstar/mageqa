@@ -1,0 +1,5 @@
+magento.version = 1.5.1.0
+magento.base_url = http://test.com
+db.user = root
+db.pass = supersecretpassword
+db.name = magento_test_1.5.1.0
