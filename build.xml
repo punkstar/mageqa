@@ -65,6 +65,7 @@
 	</target>
 
 	<target name="clean">
+		<exec command="${bin.mage-ci} uninstall ${magento.base_dir} ${db.name} -u ${db.user} -p ${db.pass}" passthru="true" checkreturn="true" />	
 		<delete dir="${magento.base_dir}" />
 		<delete dir="vendor" />
 	</target>
