@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="QA" default="install">
+<project name="QA" default="install" basedir=".">
 	<property file="./build.properties" />
 
 	<property name="magento.base_dir" value="${project.basedir}/magento" />
 	<property name="extension.base_dir" value="${project.basedir}/src" />
 
-	<property name="bin.composer" value="bin/composer.phar" />
-	<property name="bin.mage-ci"  value="bin/mage-ci" />
-	<property name="bin.magerun"  value="bin/n98-magerun --root-dir=${magento.base_dir}" />
-	<property name="bin.phpunit"  value="bin/phpunit" />
+	<property name="bin.composer" value="${phing.dir}/bin/composer.phar --working-dir=${phing.dir}" />
+	<property name="bin.mage-ci"  value="${phing.dir}/bin/mage-ci" />
+	<property name="bin.magerun"  value="${phing.dir}/bin/n98-magerun --root-dir=${magento.base_dir}" />
+	<property name="bin.phpunit"  value="${phing.dir}/bin/phpunit" />
 
 	<target name="install" depends="install-magento,install-extension" description="Install Magento and extension" />
 	<target name="lint" depends="lint-php,lint-xml" description="Run available linters" />
@@ -38,7 +38,7 @@
 	</target>
 
 	<target name="install-deps" description="Install all required dependencies">
-		<composer command="install" composer="${bin.composer}" />
+        <exec command="${bin.composer} install" passthru="true" checkreturn="true" />
 	</target>
 
 	<target name="install-magento" depends="validate-build-properties,install-deps" description="Install Magento in the ${magento.base_dir} directory">
