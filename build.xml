@@ -67,7 +67,7 @@
 	</target>
 
 	<target name="install-extension-ecomdev-phpunit">
-		<exec command="${bin.mage-ci} install-module ${magento.base_dir} git@github.com:EcomDev/EcomDev_PHPUnit.git" passthru="true" checkreturn="true" />
+		<exec command="${bin.mage-ci} install-module ${magento.base_dir} https://github.com:EcomDev/EcomDev_PHPUnit.git" passthru="true" checkreturn="true" />
 	</target>
 
 	<target name="test-phpunit" depends="install,install-deps,install-extension-ecomdev-phpunit">
