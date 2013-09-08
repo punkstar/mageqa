@@ -1,0 +1,20 @@
+{
+    "minimum-stability":"dev",
+
+    "require": {
+        "phpunit/phpunit": "3.7.24",
+        "ecomdev/mage-ci": "master",
+        "n98/magerun": "dev-develop"
+    },
+
+    "config": {
+      "bin-dir": "bin/"
+    },
+
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/punkstar/MageCI.git"
+      }
+    ]
+}

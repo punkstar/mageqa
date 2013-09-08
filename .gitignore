@@ -1,0 +1,5 @@
+/vendor
+/build.properties
+/magento
+/bin
+!/bin/composer.phar

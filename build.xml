@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="QA" default="build">
+	<property file="./build.properties" />
+
+	<property name="magento.base_dir" value="magento" />
+	<property name="extension.base_dir" value="src" />
+
+	<property name="bin.composer" value="bin/composer.phar" />
+	<property name="bin.mage-ci"  value="bin/mage-ci" />
+	<property name="bin.magerun"  value="bin/n98-magerun --root-dir=${magento.base_dir}" />
+	<property name="bin.phpunit"  value="bin/phpunit" />
+
+	<target name="build" depends="install-magento" />
+
+	<target name="validate-build-properties" description="Ensure all require properties are defined">
+		<if>
+			<not><isset property="magento.version"/></not>
+			<then><fail>magento.version is not specified</fail></then>
+		</if>
+		<if>
+			<not><isset property="magento.base_url"/></not>
+			<then><fail>magento.base_url is not specified</fail></then>
+		</if>
+		<if>
+			<not><isset property="db.user"/></not>
+			<then><fail>db.user is not specified</fail></then>
+		</if>
+		<if>
+			<not><isset property="db.name"/></not>
+			<then><fail>db.name is not specified</fail></then>
+		</if>
+		<if>
+			<not><isset property="db.pass"/></not>
+			<then><fail>db.pass is not specified</fail></then>
+		</if>
+	</target>
+
+	<target name="install-deps" description="Install all required dependencies">
+		<composer command="install" composer="${bin.composer}" />
+	</target>
+
+	<target name="install-magento" depends="validate-build-properties,install-deps" description="Install Magento in the ${magento.base_dir} directory">
+		<if>
+			<not><available type="dir" file="${magento.base_dir}" /></not>
+			<then>
+				<exec command="${bin.mage-ci} install ${magento.base_dir} ${magento.version} ${db.name} -c -t -u ${db.user} -p ${db.pass} -b ${magento.base_url}" passthru="true" checkreturn="true" />				
+			</then>
+			<else>
+				<echo message="Magento is already installed in ${magento.base_dir}" />
+			</else>
+		</if>
+
+		<exec command="${bin.magerun} cache:disable" passthru="true" checkreturn="true" />
+		<exec command="${bin.magerun} cache:clean" passthru="true" checkreturn="true" />
+
+		<exec command="${bin.magerun} index:reindex:all" passthru="true" checkreturn="true" />
+		<exec command="${bin.magerun} sys:setup:run" passthru="true" checkreturn="true" />
+
+		<exec command="${bin.magerun} cache:clean" passthru="true" checkreturn="true" />
+		<exec command="${bin.magerun} cache:enable" passthru="true" checkreturn="true" />
+	</target>
+
+	<target name="install-extension" depends="install-magento,install-deps">
+		<exec command="${bin.mage-ci} install ${magento.base_dir} ${extension.base_dir}" passthru="true" checkreturn="true" />		
+	</target>
+
+	<target name="clean">
+		<delete dir="${magento.base_dir}" />
+		<delete dir="vendor" />
+	</target>
+</project>
