@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="QA" default="build">
+<project name="QA" default="install">
 	<property file="./build.properties" />
 
-	<property name="magento.base_dir" value="magento" />
-	<property name="extension.base_dir" value="src" />
+	<property name="magento.base_dir" value="${project.basedir}/magento" />
+	<property name="extension.base_dir" value="${project.basedir}/src" />
 
 	<property name="bin.composer" value="bin/composer.phar" />
 	<property name="bin.mage-ci"  value="bin/mage-ci" />
 	<property name="bin.magerun"  value="bin/n98-magerun --root-dir=${magento.base_dir}" />
 	<property name="bin.phpunit"  value="bin/phpunit" />
 
-	<target name="build" depends="install-magento" />
+	<target name="install" depends="install-magento,install-extension" description="Install Magento and extension" />
+	<target name="lint" depends="lint-php,lint-xml" description="Run available linters" />
+	<target name="test" depends="test-phpunit" description="Run available tests" />
 
 	<target name="validate-build-properties" description="Ensure all require properties are defined">
 		<if>
@@ -43,28 +45,72 @@
 		<if>
 			<not><available type="dir" file="${magento.base_dir}" /></not>
 			<then>
-				<exec command="${bin.mage-ci} install ${magento.base_dir} ${magento.version} ${db.name} -c -t -u ${db.user} -p ${db.pass} -b ${magento.base_url}" passthru="true" checkreturn="true" />				
+				<exec command="${bin.mage-ci} install ${magento.base_dir} ${magento.version} ${db.name} -c -t -u ${db.user} -p ${db.pass} -b ${magento.base_url}" passthru="true" checkreturn="true" />						<phingcall target="magento-cache-disable" />
+				<phingcall target="magento-cache-refresh" />
+				<phingcall target="magento-index-reindexall" />
+				<phingcall target="magento-cache-enable" />
 			</then>
 			<else>
 				<echo message="Magento is already installed in ${magento.base_dir}" />
 			</else>
 		</if>
+	</target>
 
-		<exec command="${bin.magerun} cache:disable" passthru="true" checkreturn="true" />
-		<exec command="${bin.magerun} cache:clean" passthru="true" checkreturn="true" />
+	<target name="install-extension" depends="install-magento,install-deps,magento-cache-refresh">
+		<exec command="${bin.mage-ci} install-module ${magento.base_dir} ${extension.base_dir}" passthru="true" checkreturn="true" />
 
-		<exec command="${bin.magerun} index:reindex:all" passthru="true" checkreturn="true" />
+		<!-- Run any setup scripts that may have been introduced -->
 		<exec command="${bin.magerun} sys:setup:run" passthru="true" checkreturn="true" />
 
+		<phingcall target="magento-index-reindexall" />
+		<phingcall target="magento-cache-refresh" />
+	</target>
+
+	<target name="install-extension-ecomdev-phpunit">
+		<exec command="${bin.mage-ci} install-module ${magento.base_dir} git@github.com:EcomDev/EcomDev_PHPUnit.git" passthru="true" checkreturn="true" />
+	</target>
+
+	<target name="test-phpunit" depends="install,install-deps,install-extension-ecomdev-phpunit">
+		<exec command="${bin.mage-ci} phpunit ${magento.base_dir}" passthru="true" checkreturn="true" />
+
+		<phingcall target="magento-index-reindexall" />
+		<phingcall target="magento-cache-refresh" />
+	</target>
+
+	<target name="lint-php">
+		<phplint>
+			<fileset dir="${extension.base_dir}">
+				<include name="**/*.php"/>
+				<include name="**/*.phtml"/>
+			</fileset>
+		</phplint>
+	</target>
+
+	<target name="lint-xml">
+		<xmllint haltonfailure="1">
+			<fileset dir="${extension.base_dir}">
+				<include name="**/*.xml"/>
+			</fileset>
+		</xmllint>
+	</target>
+
+	<target name="magento-cache-refresh">
 		<exec command="${bin.magerun} cache:clean" passthru="true" checkreturn="true" />
+	</target>
+
+	<target name="magento-cache-disable">
+		<exec command="${bin.magerun} cache:disable" passthru="true" checkreturn="true" />
+	</target>
+
+	<target name="magento-cache-enable">
 		<exec command="${bin.magerun} cache:enable" passthru="true" checkreturn="true" />
 	</target>
 
-	<target name="install-extension" depends="install-magento,install-deps">
-		<exec command="${bin.mage-ci} install ${magento.base_dir} ${extension.base_dir}" passthru="true" checkreturn="true" />		
+	<target name="magento-index-reindexall" depends="magento-cache-refresh">
+		<exec command="${bin.magerun} index:reindex:all" passthru="true" checkreturn="true" />
 	</target>
 
-	<target name="clean">
+	<target name="clean" description="Remove composer install dependencies, Magento directory and Magento database">
 		<exec command="${bin.mage-ci} uninstall ${magento.base_dir} ${db.name} -u ${db.user} -p ${db.pass}" passthru="true" checkreturn="true" />	
 		<delete dir="${magento.base_dir}" />
 		<delete dir="vendor" />
