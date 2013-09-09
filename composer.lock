@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "7065330c2e132f52564109cfdbdedecbc9d36b66"
+                "reference": "0eb28217334e43c98e98f4712a006206c3cd6a60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/7065330c2e132f52564109cfdbdedecbc9d36b66",
-                "reference": "7065330c2e132f52564109cfdbdedecbc9d36b66",
+                "url": "https://api.github.com/repos/composer/composer/zipball/0eb28217334e43c98e98f4712a006206c3cd6a60",
+                "reference": "0eb28217334e43c98e98f4712a006206c3cd6a60",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +72,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2013-09-07 18:45:06"
+            "time": "2013-09-09 13:10:09"
         },
         {
             "name": "ecomdev/mage-ci",
@@ -80,12 +80,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/punkstar/MageCI.git",
-                "reference": "abde805b5116a01c12ce772e1d2f1693df985d15"
+                "reference": "82a7a96e89cb5131fd03f3cff4e02bc08e9daefd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/punkstar/MageCI/zipball/abde805b5116a01c12ce772e1d2f1693df985d15",
-                "reference": "abde805b5116a01c12ce772e1d2f1693df985d15",
+                "url": "https://api.github.com/repos/punkstar/MageCI/zipball/82a7a96e89cb5131fd03f3cff4e02bc08e9daefd",
+                "reference": "82a7a96e89cb5131fd03f3cff4e02bc08e9daefd",
                 "shasum": ""
             },
             "bin": [
@@ -108,7 +108,7 @@
             "support": {
                 "source": "https://github.com/punkstar/MageCI/tree/master"
             },
-            "time": "2013-09-03 16:32:32"
+            "time": "2013-09-09 14:04:22"
         },
         {
             "name": "fzaninotto/faker",
@@ -1103,12 +1103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "16008174253c873ccf5b49f08874f949a467308d"
+                "reference": "4001f81a179e3971377ce1ac51b4ff9ea851b8ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/16008174253c873ccf5b49f08874f949a467308d",
-                "reference": "16008174253c873ccf5b49f08874f949a467308d",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/4001f81a179e3971377ce1ac51b4ff9ea851b8ce",
+                "reference": "4001f81a179e3971377ce1ac51b4ff9ea851b8ce",
                 "shasum": ""
             },
             "require": {
@@ -1144,7 +1144,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-09-06 10:25:58"
+            "time": "2013-09-08 15:21:02"
         }
     ],
     "packages-dev": [
