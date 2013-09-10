@@ -10,6 +10,15 @@
 	<property name="bin.magerun"  value="${phing.dir}/bin/n98-magerun --root-dir=${magento.base_dir}" />
 	<property name="bin.phpunit"  value="${phing.dir}/bin/phpunit" />
 
+    <!-- A database name that's guaranteed to be safe -->
+    <property name="db.name.safe" refid="db.name">
+        <filterchain>
+            <replaceregexp>
+                <regexp pattern="[^0-9a-zA-Z$_]" replace="_" ignoreCase="true"/>
+            </replaceregexp>
+        </filterchain>
+    </property>
+
 	<target name="install" depends="install-magento,install-extension" description="Install Magento and extension" />
 	<target name="lint" depends="lint-php,lint-xml" description="Run available linters" />
 	<target name="test" depends="test-phpunit" description="Run available tests" />
@@ -45,7 +54,7 @@
 		<if>
 			<not><available type="dir" file="${magento.base_dir}" /></not>
 			<then>
-				<exec command="${bin.mage-ci} install ${magento.base_dir} ${magento.version} ${db.name} -c -t -u ${db.user} -p ${db.pass} -b ${magento.base_url}" passthru="true" checkreturn="true" />						<phingcall target="magento-cache-disable" />
+				<exec command="${bin.mage-ci} install ${magento.base_dir} ${magento.version} ${db.name.safe} -c -t -u ${db.user} -p ${db.pass} -b ${magento.base_url}" passthru="true" checkreturn="true" />						<phingcall target="magento-cache-disable" />
 				<phingcall target="magento-cache-refresh" />
 				<phingcall target="magento-index-reindexall" />
 				<phingcall target="magento-cache-enable" />
@@ -111,7 +120,7 @@
 	</target>
 
 	<target name="clean" depends="install-deps" description="Remove composer install dependencies, Magento directory and Magento database">
-		<exec command="${bin.mage-ci} uninstall ${magento.base_dir} ${db.name} -u ${db.user} -p ${db.pass}" passthru="true" checkreturn="true" />	
+		<exec command="${bin.mage-ci} uninstall ${magento.base_dir} ${db.name.safe} -u ${db.user} -p ${db.pass}" passthru="true" checkreturn="true" />	
 		<delete dir="${magento.base_dir}" />
 		<delete dir="${phing.dir}/vendor" />
 	</target>
