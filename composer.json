@@ -2,9 +2,9 @@
     "minimum-stability":"dev",
 
     "require": {
-        "phpunit/phpunit": "3.7.24",
+        "phpunit/phpunit": "3.7.*",
         "ecomdev/mage-ci": "master",
-        "n98/magerun": "dev-develop"
+        "n98/magerun": "dev-master"
     },
 
     "config": {

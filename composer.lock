@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f14b2d187bb39f46414f05f3c06c938c",
+    "hash": "422f0f7f3af400b8dd71c043c95df21a",
     "packages": [
         {
             "name": "composer/composer",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "0eb28217334e43c98e98f4712a006206c3cd6a60"
+                "reference": "5f538e453448e3082c739f5e4fc64bc6d78a958c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/0eb28217334e43c98e98f4712a006206c3cd6a60",
-                "reference": "0eb28217334e43c98e98f4712a006206c3cd6a60",
+                "url": "https://api.github.com/repos/composer/composer/zipball/5f538e453448e3082c739f5e4fc64bc6d78a958c",
+                "reference": "5f538e453448e3082c739f5e4fc64bc6d78a958c",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "seld/jsonlint": "1.*",
                 "symfony/console": "~2.3",
                 "symfony/finder": "~2.2",
-                "symfony/process": "~2.1"
+                "symfony/process": "~2.1@dev"
             },
             "require-dev": {
                 "phpunit/phpunit": "~3.7.10"
@@ -72,7 +72,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2013-09-09 13:10:09"
+            "time": "2013-09-09 16:34:57"
         },
         {
             "name": "ecomdev/mage-ci",
@@ -249,16 +249,16 @@
         },
         {
             "name": "n98/magerun",
-            "version": "dev-develop",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/netz98/n98-magerun.git",
-                "reference": "471d3fb871d290a3ead12377cefed4960f9724f1"
+                "reference": "d333b185b95cc1394d66142d764488649e817e6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/netz98/n98-magerun/zipball/471d3fb871d290a3ead12377cefed4960f9724f1",
-                "reference": "471d3fb871d290a3ead12377cefed4960f9724f1",
+                "url": "https://api.github.com/repos/netz98/n98-magerun/zipball/d333b185b95cc1394d66142d764488649e817e6a",
+                "reference": "d333b185b95cc1394d66142d764488649e817e6a",
                 "shasum": ""
             },
             "require": {
@@ -308,7 +308,7 @@
                 "installer",
                 "magento"
             ],
-            "time": "2013-09-05 08:59:16"
+            "time": "2013-09-02 13:52:50"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -556,16 +556,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.24",
+            "version": "3.7.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "af7b77ccb5c64458bdfca95665d29558d1df7d08"
+                "reference": "cdf0a1b7be9638bd887a3ead16e13acb510ed46b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/af7b77ccb5c64458bdfca95665d29558d1df7d08",
-                "reference": "af7b77ccb5c64458bdfca95665d29558d1df7d08",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cdf0a1b7be9638bd887a3ead16e13acb510ed46b",
+                "reference": "cdf0a1b7be9638bd887a3ead16e13acb510ed46b",
                 "shasum": ""
             },
             "require": {
@@ -626,7 +626,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-08-09 06:58:24"
+            "time": "2013-09-03 05:44:50"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
